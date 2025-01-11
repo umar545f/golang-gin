@@ -12,13 +12,13 @@ import (
 var DB *gorm.DB
 
 func InitializeDB() (*gorm.DB, error) {
-	//Define the connection string dsn "User:Password@protocol(hostname:hostnumber)/db_name"
-	dsn := "root:Faster@1@tcp(127.0.0.1:3306)/restaraunt?parseTime=true"
+	// Use host.docker.internal for Docker to host machine connection (for Docker Desktop)
+	dsn := "root:Faster@1@tcp(host.docker.internal:3306)/restaraunt?parseTime=true"
 
 	DB, err := gorm.Open("mysql", dsn)
-
 	if err != nil {
 		log.Printf("Unable to connect to database : %v", err)
+		return nil, err
 	}
 
 	// Create tables if they do not exist
