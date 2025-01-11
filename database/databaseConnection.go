@@ -13,7 +13,7 @@ var DB *gorm.DB
 
 func InitializeDB() (*gorm.DB, error) {
 	//Define the connection string dsn "User:Password@protocol(hostname:hostnumber)/db_name"
-	dsn := "root:Faster@1@tcp(host.docker.internal:3306)/restaraunt?parseTime=true"
+	dsn := "root:Faster@1@tcp(127.0.0.1:3306)/restaraunt?parseTime=true"
 
 	DB, err := gorm.Open("mysql", dsn)
 
