@@ -67,7 +67,7 @@ func CreateMenu(db *gorm.DB) gin.HandlerFunc {
 		for _, food := range menu.Foods {
 			for _, existingFood := range existingFood {
 				if food.Name == existingFood.Name {
-					existingFood.MenuId = true
+					existingFood.OnMenu = true
 					if err := db.Save(&existingFood).Error; err != nil {
 						ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update food record"})
 						return
