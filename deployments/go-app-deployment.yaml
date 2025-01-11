@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-app
+spec:
+  replicas: 2  # We want two pods for scaling
+  selector:
+    matchLabels:
+      app: go-app
+  template:
+    metadata:
+      labels:
+        app: go-app
+    spec:
+      containers:
+        - name: go-app
+          image: umar545f/my-go-app:latest  # The image you built earlier
+          ports:
+            - containerPort: 7200
+          env:
+            - name: DB_HOST
+              value: "mysql-service"  # Kubernetes service for MySQL
+            - name: DB_USER
+              value: "root"
+            - name: DB_PASSWORD
+              value: "Faster@1"
+            - name: DB_NAME
+              value: "restaraunt"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-app-service
+spec:
+  selector:
+    app: go-app
+  ports:
+    - port: 7200
+      targetPort: 7200
+  type: LoadBalancer  # You can change this to ClusterIP if using internal access only
